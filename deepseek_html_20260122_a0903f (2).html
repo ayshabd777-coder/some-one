@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>From the First Day</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: 'Segoe UI', sans-serif;
+        background: linear-gradient(135deg, #fde2e4, #fadadd, #e2f0f9);
+        min-height: 100vh;
+        overflow-x: hidden;
+        color: #333;
+        position: relative;
+      }
+
+      /* FLOWER ANIMATION */
+      .flower {
+        position: absolute;
+        font-size: 24px;
+        opacity: 0;
+        pointer-events: none;
+        /* don't block scrolling */
+        animation: fly 2s forwards;
+      }
+
+      @keyframes fly {
+        0% {
+          transform: translate(0, 0) rotate(0deg);
+          opacity: 1;
+        }
+
+        100% {
+          transform: translate(var(--x), var(--y)) rotate(360deg);
+          opacity: 0;
+        }
+      }
+
+      .container {
+        width: 100%;
+        max-width: 450px;
+        background: rgba(255, 255, 255, 0.78);
+        backdrop-filter: blur(8px);
+        border-radius: 26px;
+        padding: 36px 30px;
+        text-align: center;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        display: none;
+        /* hide initially */
+        animation: fadeIn 2s ease forwards;
+        margin: 20px auto;
+      }
+
+      h1 {
+        font-size: 1.9em;
+        margin-bottom: 6px;
+        color: #444;
+      }
+
+      .name {
+        font-size: 1.35em;
+        color: #e75480;
+        font-weight: 600;
+        margin-bottom: 18px;
+      }
+
+      .heart {
+        font-size: 36px;
+        margin: 14px 0;
+      }
+
+      p {
+        font-size: 0.97em;
+        line-height: 1.75;
+        margin: 14px 0;
+      }
+
+      .buttons {
+        display: flex;
+        justify-content: center;
+        gap: 16px;
+        margin-top: 26px;
+        flex-wrap: wrap;
+      }
+
+      button {
+        padding: 12px 28px;
+        border-radius: 30px;
+        font-size: 1em;
+        cursor: pointer;
+        border: none;
+        transition: 0.3s ease;
+      }
+
+      .yes {
+        background: #e75480;
+        color: white;
+      }
+
+      .yes:hover {
+        background: #d63b6c;
+      }
+
+      .no {
+        background: transparent;
+        border: 1px solid #999;
+        color: #444;
+      }
+
+      .no:hover {
+        background: rgba(0, 0, 0, 0.05);
+      }
+
+      .tap {
+        margin-top: 18px;
+        font-size: 0.8em;
+        opacity: 0.7;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(25px);
+        }
+
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 🎵 BACKGROUND MUSIC -->
+    <audio id="bgMusic" loop>
+      <source src="https://assets.mixkit.co/music/preview/mixkit-serene-view-443.mp3" type="audio/mpeg">
+    </audio>
+    <!-- FLOWER CONTAINER -->
+    <div id="flowers"></div>
+    <!-- MAIN PAGE CONTENT -->
+    <div class="container" id="mainContent" onclick="playMusic()">
+      <h1>From the First Day</h1>
+      <div class="name">Rahisha 🌸</div>
+      <div class="heart">❤️</div>
+      <p> I still remember the very first day we spoke. Not because something dramatic happened, but because something quietly changed inside me — something I didn’t even understand at that moment. </p>
+      <p> What started as small conversations, simple debates, and moments that probably felt ordinary to you, slowly became important to me. </p>
+      <p> The way you spoke with confidence, the way you expressed yourself, the way you stayed true to who you are — all of it stayed with me. </p>
+      <p> I didn’t plan to feel this way. It wasn’t sudden, and it wasn’t forced. My feelings grew slowly, naturally, without me even realising when it happened. </p>
+      <p> There were many times I wanted to say something… and many times I chose silence instead. Not because I didn’t care, but because I cared enough to be careful. </p>
+      <p> I never wanted to rush you. I never wanted to make you uncomfortable. I never wanted to become someone who pressured you. So I kept choosing respect — again and again — even when my heart wanted more. </p>
+      <p> This page isn’t meant to impress you. It isn’t meant to trap you in a moment. It’s simply the most honest way I know how to express what I’ve been carrying quietly. </p>
+      <p> I like you, Rahisha. Not just for a moment, not just for a reason — but from the first day… till now. </p>
+      <p> Whatever you choose — yes or no — I promise one thing will never change: the respect I have for you, and the sincerity behind these words. </p>
+      <div class="buttons">
+        <button class="yes" onclick="answerYes(event)">Yes</button>
+        <button class="no" onclick="answerNo(event)">No</button>
+      </div>
+      <div class="tap">Tap anywhere to start music 🎵</div>
+    </div>
+    <script>
+      // FLOWER EXPLOSION
+      function createFlowers() {
+        const flowersDiv = document.getElementById('flowers');
+        const flowerEmojis = ['🌸', '🌺', '🌼', '🌷', '💐'];
+        for (let i = 0; i < 50; i++) {
+          const flower = document.createElement('div');
+          flower.className = 'flower';
+          flower.style.left = '50%';
+          flower.style.top = '50%';
+          flower.style.setProperty('--x', `${(Math.random()-0.5)*150}vw`);
+          flower.style.setProperty('--y', `${(Math.random()-0.5)*150}vh`);
+          flower.textContent = flowerEmojis[Math.floor(Math.random() * flowerEmojis.length)];
+          flowersDiv.appendChild(flower);
+        }
+        // After animation, show main content
+        setTimeout(() => {
+          document.getElementById('mainContent').style.display = 'block';
+          flowersDiv.style.display = 'none';
+          document.body.style.overflowY = 'auto'; // enable scrolling
+        }, 2000);
+      }
+
+      function playMusic() {
+        const music = document.getElementById("bgMusic");
+        if (music.paused) music.play();
+      }
+
+      function answerYes(e) {
+        e.stopPropagation();
+        alert("This made my heart smile 🌸\n\n" + "I can't see your answer here,\n" + "would you mind saying it in my DMs?\n\n" + "Only if you're comfortable 🤍");
+        window.location.href = "https://www.instagram.com/direct/t/_shopnil_kha_/";
+      }
+
+      function answerNo(e) {
+        e.stopPropagation();
+        alert("Thank you for being honest 🌷\n\n" + "I truly respect your feelings,\n" + "and I wish you peace and happiness.");
+      }
+      // Run flower explosion on page load
+      window.onload = createFlowers;
+    </script>
+  </body>
+</html>
